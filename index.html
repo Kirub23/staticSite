@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Form</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var submitted=false
+    </script>
+    <iframe name="hiddenConfirm" id="hiddenConfirm" style="display:none;" onload="if(submitted){window.location='confirmation.php';}"></iframe>
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSc7V6vVytVwF01tuoQ-PGqhHVwTWf5Osrkk87MJc4lFR4TDIQ/formResponse" method="post" target="hiddenConfirm" onsubmit="submitted=true">
+        <!-- Text -->
+        <label for="entry.2005620554">Name</label>
+        <input type="text" name="entry.2005620554"><br>
+
+        <label for="entry.1045781291">Email</label>
+        <input type="text" name="entry.1045781291"><br>
+
+        <label for="entry.1166974658">Phone</label>
+        <input type="text" name="entry.1166974658"><br>
+
+        <label for="entry.839337160">Comment</label>
+        <input type="text" name="entry.839337160"><br>
+
+        <!-- Multiple ; Radio button -->
+        <!--- <label for="entry.222">gender</label>
+         <input type="radio" id="entry.222" name="entry.222" value="Male">
+         <input type="radio" name="entry.222" id="entry.222" value="Female">
+--->
+        <!-- Checkboxes -->
+      <!---   <label for="entry.333">gender</label>
+         <input type="checkbox" id="entry.333" name="entry.333" value="Male">
+         <input type="checkbox" name="entry.333" id="entry.333" value="Female">
+    -->
+        <button type="submit">Submit Form</button>
+    </form>
+</body>
+</html>
