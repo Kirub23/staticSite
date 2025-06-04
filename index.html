@@ -32,7 +32,7 @@
     <img src="logo.PNG" alt="Company Logo" class="logo">
     </header>
     <script type="text/javascript">var submitted = false;</script>
-    <iframe name="hiddenConfirm" id="hiddenConfirm" style="display:none;" onload="if(submitted){window.location='confirmation.html';}"></iframe>
+    <iframe name="hiddenConfirm" id="hiddenConfirm" style="display:none;" onload="if(submitted){window.location='confirmation.php';}"></iframe>
 
     
     <div id="deadline-message" style="display: none; color: #29398D; font-weight: bold;">
@@ -97,6 +97,7 @@
         <label>Gender</label><br>
         <label><input type="radio" name="entry.1008405459" value="Male"> Male</label>
         <label><input type="radio" name="entry.1008405459" value="Female"> Female</label>
+        <label><input type="radio" name="entry.1008405459" value="none"> None</label>
 
         <label for="entry.1591420717">Marital Status</label>
         <select name="entry.1591420717" id="entry.1591420717" required>
@@ -127,7 +128,7 @@
         <input type="text" name="entry.325218789" ><br>
         
         <label for="entry.766114599">Country</label>
-        <select name="entry.766114599" id="entry.766114599" >
+        <select name="entry.766114599" id="entry.766114599" required>
           <option value="" disabled selected>Select your country</option>
           <option value="Afghanistan">Afghanistan</option>
           <option value="Albania">Albania</option>
@@ -1296,7 +1297,6 @@
         }
     });
 
-    // Event delegation for remove buttons
     document.getElementById('experienceContainer').addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-experience')) {
             const entryToRemove = e.target.closest('.experience-entry');
@@ -1342,7 +1342,6 @@
         }
     });
 
-    // Event delegation for remove buttons
     document.getElementById('educationContainer').addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-education')) {
             const entryToRemove = e.target.closest('.education-entry');
@@ -1390,7 +1389,6 @@
         }
     });
 
-    // Event delegation for remove buttons
     document.getElementById('trainingContainer').addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-training')) {
             const entryToRemove = e.target.closest('.training-entry');
@@ -1437,7 +1435,6 @@
         }
     });
 
-    // Event delegation for remove buttons
     document.getElementById('languageContainer').addEventListener('click', function(e) {
         if (e.target.classList.contains('remove-language')) {
             const entryToRemove = e.target.closest('.language-entry');
@@ -1610,7 +1607,7 @@ document.querySelector('form').addEventListener('submit', async function(e) {
     });
     
     // Redirect to confirmation page
-    window.location.href = 'confirmation.html';
+    window.location.href = 'confirmation.php';
   } catch (error) {
     console.error('Error:', error);
     alert('Submission failed. Please try again or contact support.');
