@@ -32,7 +32,7 @@
     <img src="logo.PNG" alt="Company Logo" class="logo">
     </header>
     <script type="text/javascript">var submitted = false;</script>
-    <iframe name="hiddenConfirm" id="hiddenConfirm" style="display:none;" onload="if(submitted){window.location='confirmation.php';}"></iframe>
+    <iframe name="hiddenConfirm" id="hiddenConfirm" style="display:none;" onload="if(submitted){window.location='confirmation.html';}"></iframe>
 
     
     <div id="deadline-message" style="display: none; color: #29398D; font-weight: bold;">
@@ -86,15 +86,15 @@
         <input type="email" name="entry.1640447617" required><br>
 
         <label for="entry.297979220">Phone</label>
-        <input type="tel" name="entry.297979220" placeholder="+2519...."  required><br>
+        <input type="tel" name="entry.297979220" placeholder="+2519...." pattern="^\+?[1-9]\d{1,14}$" required><br>
 
         <label for="entry.1111570625">Another Phone number</label>
-        <input type="tel" name="entry.1111570625" placeholder="+2519... "  ><br>
+        <input type="tel" name="entry.1111570625" placeholder="+2519... " pattern="^\+?[1-9]\d{1,14}$" ><br>
 
         <label for="entry.237060080">Date of Birth</label>
         <input type="date" name="entry.237060080" required><br>
 
-        <label>Gender</label><br>
+        <label>Gender</label> <br>
         <label><input type="radio" name="entry.1008405459" value="Male"> Male</label>
         <label><input type="radio" name="entry.1008405459" value="Female"> Female</label>
         <label><input type="radio" name="entry.1008405459" value="none"> None</label>
@@ -1515,33 +1515,82 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Validate current section before proceeding
   function validateSection(index) {
-    const currentSection = sections[index];
-    const requiredFields = currentSection.querySelectorAll('[required]');
-    let isValid = true;
+  const currentSection = sections[index];
+  const requiredFields = currentSection.querySelectorAll('[required]');
+  let isValid = true;
+  let firstInvalidField = null;
 
-    requiredFields.forEach(field => {
-      if (!field.value.trim()) {
-        field.style.borderColor = '#e74c3c';
-        isValid = false;
-        
-        // Scroll to first invalid field
-        if (isValid === false) {
-          field.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          });
-        }
-      } else {
-        field.style.borderColor = '#ddd';
-      }
-    });
+  requiredFields.forEach(field => {
+    const value = field.value.trim();
+    field.style.borderColor = '#ddd'; // reset previous style
 
-    if (!isValid) {
-      alert('Please fill in all required fields before continuing.');
+    // Check empty
+    if (!value) {
+      field.style.borderColor = '#e74c3c';
+      if (!firstInvalidField) firstInvalidField = field;
+      isValid = false;
+      return;
     }
 
-    return isValid;
+    // Validate based on input type
+    switch (field.type) {
+      case 'email':
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          field.style.borderColor = '#e74c3c';
+          if (!firstInvalidField) firstInvalidField = field;
+          alert('❌ Invalid email address.');
+          isValid = false;
+        }
+        break;
+
+      case 'tel':
+      case 'phone':
+        if (!/^\+?[0-9]{7,15}$/.test(value)) {
+          field.style.borderColor = '#e74c3c';
+          if (!firstInvalidField) firstInvalidField = field;
+          alert('📞 Invalid phone number (7–15 digits).');
+          isValid = false;
+        }
+        break;
+
+      case 'number':
+        if (isNaN(value)) {
+          field.style.borderColor = '#e74c3c';
+          if (!firstInvalidField) firstInvalidField = field;
+          alert('🔢 Only numeric values allowed.');
+          isValid = false;
+        }
+        break;
+
+      case 'url':
+        try {
+          new URL(value);
+        } catch (_) {
+          field.style.borderColor = '#e74c3c';
+          if (!firstInvalidField) firstInvalidField = field;
+          alert('🔗 Invalid URL format.');
+          isValid = false;
+        }
+        break;
+
+      case 'date':
+        if (isNaN(Date.parse(value))) {
+          field.style.borderColor = '#e74c3c';
+          if (!firstInvalidField) firstInvalidField = field;
+          alert('📅 Invalid date format.');
+          isValid = false;
+        }
+        break;
+    }
+  });
+
+  if (!isValid && firstInvalidField) {
+    firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
+
+  return isValid;
+}
+
 
   // Update progress indicator
   function updateProgress() {
@@ -1612,7 +1661,7 @@ document.querySelector('form').addEventListener('submit', async function(e) {
     });
     
     // Redirect to confirmation page
-    window.location.href = 'confirmation.php';
+    window.location.href = 'confirmation.html';
   } catch (error) {
     console.error('Error:', error);
     alert('Submission failed. Please try again or contact support.');
