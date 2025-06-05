@@ -1548,7 +1548,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!/^\+?[0-9]{7,15}$/.test(value)) {
           field.style.borderColor = '#e74c3c';
           if (!firstInvalidField) firstInvalidField = field;
-          alert('📞 Invalid phone number (7–15 digits).');
+          alert('📞 Invalid phone number.');
           isValid = false;
         }
         break;
