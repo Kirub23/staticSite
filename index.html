@@ -1553,14 +1553,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         break;
 
-      case 'number':
-        if (isNaN(value)) {
-          field.style.borderColor = '#e74c3c';
-          if (!firstInvalidField) firstInvalidField = field;
-          alert('🔢 Only numeric values allowed.');
-          isValid = false;
-        }
-        break;
+        case 'number':
+          if (!value || !isFinite(Number(value))) {
+            field.style.borderColor = '#e74c3c';
+            if (!firstInvalidField) firstInvalidField = field;
+            alert('🔢 Please enter a valid numeric value.');
+            isValid = false;
+          } else {
+            field.style.borderColor = '#ddd';
+          }
+          break;
 
       case 'url':
         try {
