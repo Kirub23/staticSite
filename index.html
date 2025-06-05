@@ -1552,18 +1552,15 @@ document.addEventListener('DOMContentLoaded', function() {
           isValid = false;
         }
         break;
-
         case 'number':
-          if (!value || !isFinite(Number(value))) {
-            field.style.borderColor = '#e74c3c';
-            if (!firstInvalidField) firstInvalidField = field;
-            alert('🔢 Please enter a valid numeric value.');
-            isValid = false;
-          } else {
-            field.style.borderColor = '#ddd';
-          }
-          break;
-
+           const num = Number(value);
+           if (value === '' || !isFinite(num)) {
+             field.style.borderColor = '#e74c3c';
+             if (!firstInvalidField) firstInvalidField = field;
+             alert('🔢 Please enter a valid numeric value.');
+             isValid = false;
+           }
+           break;
       case 'url':
         try {
           new URL(value);
