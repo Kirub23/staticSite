@@ -1552,14 +1552,25 @@ document.addEventListener('DOMContentLoaded', function() {
           isValid = false;
         }
         break;
-        case 'number':
-           const num = Number(value);
-           if (value === '' || !isFinite(num)) {
-             field.style.borderColor = '#e74c3c';
-             if (!firstInvalidField) firstInvalidField = field;
-             alert('🔢 Please enter a valid numeric value.');
-             isValid = false;
-           }
+      case 'number':
+          const numValue = field.value.trim();
+          // Only validate if there's a value (since field is not required)
+          if (numValue) {
+              // Check if the value is a valid number
+              if (isNaN(field.valueAsNumber)) {
+                  field.style.borderColor = '#e74c3c';
+                  if (!firstInvalidField) firstInvalidField = field;
+                  alert('🔢 Please enter a valid numeric value (e.g., 3.5).');
+                  isValid = false;
+              }
+              // Optionally, add range validation (e.g., GPA between 0 and 4)
+              else if (field.valueAsNumber < 0 || field.valueAsNumber > 4) {
+                  field.style.borderColor = '#e74c3c';
+                  if (!firstInvalidField) firstInvalidField = field;
+                  alert('📊 GPA must be between 0 and 4.');
+                  isValid = false;
+              }
+          }
            break;
       case 'url':
         try {
